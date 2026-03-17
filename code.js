@@ -1,6 +1,21 @@
 let cartaSelecionada = null;
 let indiceSelecionado = null;
 
+let Zonas = {
+    Monster_Zone1: null,
+    Monster_Zone2: null,
+    Monster_Zone3: null,
+    Monster_Zone4: null,
+    Monster_Zone5: null,
+
+    Magic_Zone1: null,
+    Magic_Zone2: null,
+    Magic_Zone3: null,
+    Magic_Zone4: null,
+    Magic_Zone5: null,
+    Camp_Zone: null
+};
+
 let Deck = [
     {nome: "card1", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7F4jS0-ADbkvqZQM-i5oJxSQ1rKWo60FMkQ&"},
     {nome: "card2", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7F4jS0-ADbkvqZQM-i5oJxSQ1rKWo60FMkQ&"},
@@ -93,42 +108,63 @@ function atualizarHand(){
     });
 
 }
-function enviarParaZona(idZona){
+function clicarZona(idZona){
 
-    if(cartaSelecionada === null){
-        console.log("Nenhuma carta selecionada");
+    let cartaNaZona = Zonas[idZona];
+
+    // 🔴 CASO 1: tem carta selecionada na mão → enviar pra zona
+    if(cartaSelecionada){
+
+        // se já tiver carta na zona → volta pra mão
+        if(cartaNaZona){
+            Hand.push(cartaNaZona);
+        }
+
+        Zonas[idZona] = cartaSelecionada;
+
+        Hand.splice(indiceSelecionado,1);
+
+        cartaSelecionada = null;
+        indiceSelecionado = null;
+
+        atualizarHand();
+        atualizarZonas();
         return;
     }
 
-    let zona = document.getElementById(idZona);
+    // 🔵 CASO 2: não tem carta selecionada → puxar da zona pra mão
+    if(cartaNaZona){
 
-    zona.style.backgroundImage = `url(${cartaSelecionada.imagem})`;
-    zona.style.backgroundSize = "cover";
-    zona.style.backgroundPosition = "center";
+        Hand.push(cartaNaZona);
+        Zonas[idZona] = null;
 
-    // remove da mão
-    Hand.splice(indiceSelecionado,1);
+        atualizarHand();
+        atualizarZonas();
+    }
+}
+function atualizarZonas(){
 
-    cartaSelecionada = null;
-    indiceSelecionado = null;
+    for(let zona in Zonas){
 
-    atualizarHand();
+        let elemento = document.getElementById(zona);
+
+        if(Zonas[zona]){
+            elemento.style.backgroundImage = `url(${Zonas[zona].imagem})`;
+            elemento.style.backgroundSize = "cover";
+            elemento.style.backgroundPosition = "center";
+        } else {
+            elemento.style.backgroundImage = "none";
+        }
+    }
 }
 function buscar(){}
 function enviar_gravehard_topcard(){}
 function enviar_gravehard(){}
 function abrir_menuextradeck(){}
 
-document.getElementById("Monster_Zone1").onclick = () => enviarParaZona("Monster_Zone1");
-document.getElementById("Monster_Zone2").onclick = () => enviarParaZona("Monster_Zone2");
-document.getElementById("Monster_Zone3").onclick = () => enviarParaZona("Monster_Zone3");
-document.getElementById("Monster_Zone4").onclick = () => enviarParaZona("Monster_Zone4");
-document.getElementById("Monster_Zone5").onclick = () => enviarParaZona("Monster_Zone5");
-
-document.getElementById("Magic_Zone1").onclick = () => enviarParaZona("Magic_Zone1");
-document.getElementById("Magic_Zone2").onclick = () => enviarParaZona("Magic_Zone2");
-document.getElementById("Magic_Zone3").onclick = () => enviarParaZona("Magic_Zone3");
-document.getElementById("Magic_Zone4").onclick = () => enviarParaZona("Magic_Zone4");
-document.getElementById("Magic_Zone5").onclick = () => enviarParaZona("Magic_Zone5");
-
-document.getElementById("Camp-Zone").onclick = () => enviarParaZona("Camp-Zone");
+[
+"Monster_Zone1","Monster_Zone2","Monster_Zone3","Monster_Zone4","Monster_Zone5",
+"Magic_Zone1","Magic_Zone2","Magic_Zone3","Magic_Zone4","Magic_Zone5","Camp_Zone"
+].forEach(id => {
+    document.getElementById(id).onclick = () => clicarZona(id);
+});
