@@ -1,0 +1,77 @@
+body{
+    background-color: rgb(36, 35, 35);
+    margin: 5px 0 0 0;
+}
+header{
+    display: flex;
+    justify-content: center;
+}
+#menudeck{
+    padding: 10px;
+    background-color: grey;
+    border-radius: 10px;
+    width: 300px;
+    display: none;
+    position: absolute;
+    z-index: 10;
+}
+.opmenu{
+    padding: 5px;
+}
+main{
+    display: grid;
+}
+.size-button{
+    height: 200px;
+    width: 140px;
+}
+.container-extra_ban{
+    justify-content: end;
+}
+.display_basic{
+    display: flex;
+}
+.container-extra_ban{
+    display: flex;
+}
+.down_space{
+    margin-bottom: 10px;
+}.left_space{
+    margin-left: 10px;
+}
+.right_space{
+    margin-right: 10px;
+}
+footer{
+    height: 300px;
+    width: 100%;
+    background-color: rgb(84, 82, 82);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#mao_container{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    white-space: nowrap;
+    border: 2px solid black;
+    padding: 10px;
+    max-width: 1250px;
+
+    height: 200px;
+    width: 1100px;
+    background-color: white;
+}
+
+.cardButton{
+    width: 140px;
+    height: 200px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}

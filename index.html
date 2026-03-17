@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div id="menudeck">
+            <button style="margin-bottom: 10px;" class="opmenu" onclick="embaralhar()">Embaralhar</button>
+            <button style="margin-bottom: 10px;" class="opmenu" onclick="compra()">Comprar</button>
+            <button style="margin-bottom: 10px;" class="opmenu">Buscar Carta</button>
+            <button style="margin-bottom: 10px;" class="opmenu">Enviar para o cemiterio 1card</button>
+            <button class="opmenu">Buscar Carta para o cemiterio</button>
+        </div>
+        <main>
+            <section class="container-extra_ban down_space">
+                <div id="extra_monster-container1" class="right_space">
+                    <button id="Extra_Monster-Zone1" class="size-button">Extra 1</button>
+                </div>
+                <div class="size-button right_space"></div>
+                <div id="extra_monster-container2" class="right_space">
+                    <button id="Extra_Monster-Zone2" class="size-button">Extra 2</button>
+                </div>
+                <div class="size-button right_space"></div>
+                <div id="ban-container" class="right_space">
+                    <button id="Ban-Zone" class="size-button">Ban</button>
+                </div>
+            </section>
+            <div class="display_basic">
+                <aside>
+                    <div id="camp-container" class="down_space">
+                        <button id="Camp-Zone" class="size-button">Field</button>
+                    </div>
+                    <div id="extra_deck-container">
+                        <button id="Extra_Deck" class="size-button">Extra Deck</button>
+                    </div>
+                </aside>
+                <div class="left_space">
+                    <section class="display_basic container-monster down_space">
+                        <div id="monster-container1" class="right_space">
+                            <button id="Monster_Zone1" class="size-button">Monster 1</button>
+                        </div>
+                        <div id="monster-container2" class="right_space">
+                            <button id="Monster_Zone2" class="size-button">Monster 2</button>
+                        </div>
+                        <div id="monster-container3" class="right_space">
+                            <button id="Monster_Zone3" class="size-button">Monster 3</button>
+                        </div>
+                        <div id="monster-container4" class="right_space">
+                            <button id="Monster_Zone4" class="size-button">Monster 4</button>
+                        </div>
+                        <div id="monster-container5" class="right_space">
+                            <button id="Monster_Zone5" class="size-button">Monster 5</button>
+                        </div>
+                    </section>
+                    <section class="display_basic container-magic">
+                        <div id="magic-container1" class="right_space">
+                            <button id="Magic_Zone1" class="size-button">Spell/Trap 1</button>
+                        </div>
+                        <div id="magic-container2" class="right_space">
+                            <button id="Magic_Zone2" class="size-button">Spell/Trap 2</button>
+                        </div>
+                        <div id="magic-container3" class="right_space">
+                            <button id="Magic_Zone3" class="size-button">Spell/Trap 3</button>
+                        </div>
+                        <div id="magic-container4" class="right_space">
+                            <button id="Magic_Zone4" class="size-button">Spell/Trap 4</button>
+                        </div>
+                        <div id="magic-container5" class="right_space">
+                            <button id="Magic_Zone5" class="size-button">Spell/Trap 5</button>
+                        </div>
+                    </section>
+                </div>
+                <aside class="right_space">
+                    <div id="gravehard-container" class="down_space">
+                        <button id="Gravehard" class="size-button">Gravehard</button>
+                    </div>
+                    <div id="deck-container">
+                        <button id="Deck" class="size-button" onclick="abrir_menudeck()">Deck</button>
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </header>
+    <br>
+    <footer>
+        <div id="mao_container"></div>
+    </footer>
+    <script src="code.js"></script>
+</body>
+</html>
