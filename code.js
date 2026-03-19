@@ -26,7 +26,8 @@ let Deck = [
     {nome: "card7", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_TfnuiNqTcz_5VE83RnodOhyVRUUCTZN5Q&s"},
     {nome: "card8", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_TfnuiNqTcz_5VE83RnodOhyVRUUCTZN5Q&s"},
     {nome: "card9", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_TfnuiNqTcz_5VE83RnodOhyVRUUCTZN5Q&s"},
-    {nome: "card10", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw9WonJ5RzIMkpmtg1Bns_QwxwTfR-cxhjFw&s"}]
+    {nome: "card10", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw9WonJ5RzIMkpmtg1Bns_QwxwTfR-cxhjFw&s"}
+]
 
 console.log("Deck original:", Deck);
 
@@ -78,12 +79,12 @@ function atualizarHand(){
         botao.className = "cardButton";
 
         botao.style.backgroundImage = `url(${carta.imagem})`;
-        botao.style.backgroundSize = "cover";
+        botao.style.backgroundSize = "140px 200px";
+        botao.style.backgroundRepeat = "no-repeat";
         botao.style.backgroundPosition = "center";
 
         botao.onclick = function(){
 
-            // se clicar na mesma carta selecionada → desmarcar
             if(indiceSelecionado === index){
                 indiceSelecionado = null;
                 cartaSelecionada = null;
@@ -91,14 +92,12 @@ function atualizarHand(){
                 return;
             }
 
-            // selecionar nova carta
             cartaSelecionada = carta;
             indiceSelecionado = index;
 
             atualizarHand();
         };
-
-        // deixa vermelha se estiver selecionada
+    
         if(indiceSelecionado === index){
             botao.style.border = "4px solid red";
         }
@@ -157,7 +156,43 @@ function atualizarZonas(){
         }
     }
 }
-function buscar(){}
+function buscar(){
+
+    let area = document.getElementById("buscar_container");
+    let areap = document.getElementById("buscar");
+
+    areap.style.display = "flex";
+
+    area.innerHTML = "";
+
+    Deck.forEach(function(carta, index){
+
+        let botao = document.createElement("button");
+
+        botao.className = "cardButton";
+
+        botao.style.backgroundImage = `url(${carta.imagem})`;
+        botao.style.backgroundSize = "140px 200px";
+        botao.style.backgroundPosition = "center";
+
+        botao.onclick = function(){
+
+            Hand.push(carta);
+
+            Deck.splice(index,1);
+
+            areap.style.display = "none";
+
+            cartaSelecionada = null;
+            indiceSelecionado = null;
+
+            atualizarHand();
+            embaralhar();
+        };
+
+        area.appendChild(botao);
+    });
+}
 function enviar_gravehard_topcard(){}
 function enviar_gravehard(){}
 function abrir_menuextradeck(){}
