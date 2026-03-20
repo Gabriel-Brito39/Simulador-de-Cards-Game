@@ -2,8 +2,12 @@ let cartaSelecionada = null;
 let indiceSelecionado = null;
 
 let Menudeck = document.getElementById("menudeck");
+let menuextradeck = document.getElementById("menuextradeck");
 
 let Zonas = {
+    Extra_Monster_Zone1: null,
+    Extra_Monster_Zone2: null,
+
     Monster_Zone1: null,
     Monster_Zone2: null,
     Monster_Zone3: null,
@@ -19,9 +23,6 @@ let Zonas = {
 };
 
 let Deck = [
-    {nome: "card1", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7F4jS0-ADbkvqZQM-i5oJxSQ1rKWo60FMkQ&"},
-    {nome: "card2", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7F4jS0-ADbkvqZQM-i5oJxSQ1rKWo60FMkQ&"},
-    {nome: "card3", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7F4jS0-ADbkvqZQM-i5oJxSQ1rKWo60FMkQ&"},
     {nome: "card4", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBMdJNvLx6f-oh5oHH4id7qNJ8spmhZOD2qQ&s"},
     {nome: "card5", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBMdJNvLx6f-oh5oHH4id7qNJ8spmhZOD2qQ&s"},
     {nome: "card6", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBMdJNvLx6f-oh5oHH4id7qNJ8spmhZOD2qQ&s"},
@@ -33,6 +34,11 @@ let Deck = [
 let Graveyard = [];
 let Ban = [];
 let Hand = []
+let ExtraDeck = [
+    {nome: "card1", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7F4jS0-ADbkvqZQM-i5oJxSQ1rKWo60FMkQ&"},
+    {nome: "card2", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7F4jS0-ADbkvqZQM-i5oJxSQ1rKWo60FMkQ&"},
+    {nome: "card3", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7F4jS0-ADbkvqZQM-i5oJxSQ1rKWo60FMkQ&"}
+]
 
 function abrir_menudeck(){
     if (Menudeck.style.display === "none"){
@@ -150,7 +156,6 @@ function atualizarZonas(){
     }
 }
 function buscar(){
-
     let area = document.getElementById("buscar_container");
     let areap = document.getElementById("buscar");
 
@@ -236,6 +241,13 @@ function enviarParaDeck(){
 
     console.log("Carta retornou ao deck:", carta.nome);
 }
+function enviarParaExtraDeck(){
+
+    let carta = removerDaHand();
+    if(!carta) return;
+
+    ExtraDeck.push(carta);
+}
 function mostrarCemiterio(){
 
     let area = document.getElementById("cemiterio_container");
@@ -314,11 +326,55 @@ function mostrarBanimento(){
         area.appendChild(botao);
     });
 }
+function abrir_menuextradeck(){
+    if (menuextradeck.style.display === "none"){
+        menuextradeck.style.display = "grid";
+    } else {
+        menuextradeck.style.display = "none";
+    }
+}
+function buscarExtra(){
+    let area = document.getElementById("extra_container");
+    let areap = document.getElementById("extra");
 
-function abrir_menuextradeck(){}
+    area.innerHTML = "";
+
+    if (areap.style.display === "none"){
+        areap.style.display = "flex";
+    } else {
+        areap.style.display = "none";
+    }
+
+    ExtraDeck.forEach(function(carta, index){
+
+        let botao = document.createElement("button");
+
+        botao.className = "cardButton";
+
+        botao.style.backgroundImage = `url(${carta.imagem})`;
+        botao.style.backgroundSize = "140px 200px";
+        botao.style.backgroundPosition = "center";
+
+        botao.onclick = function(){
+
+            Hand.push(carta);
+
+            ExtraDeck.splice(index,1);
+
+            areap.style.display = "none";
+
+            cartaSelecionada = null;
+            indiceSelecionado = null;
+
+            atualizarHand();
+        };
+        area.appendChild(botao);
+    });
+}
+
 
 [
-"Monster_Zone1","Monster_Zone2","Monster_Zone3","Monster_Zone4","Monster_Zone5",
+"Extra_Monster_Zone1", "Extra_Monster_Zone2", "Monster_Zone1","Monster_Zone2","Monster_Zone3","Monster_Zone4","Monster_Zone5",
 "Magic_Zone1","Magic_Zone2","Magic_Zone3","Magic_Zone4","Magic_Zone5","Camp_Zone"
 ].forEach(id => {
     document.getElementById(id).onclick = () => clicarZona(id);

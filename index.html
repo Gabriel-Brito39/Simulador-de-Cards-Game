@@ -9,18 +9,23 @@
 <body>
     <header>
         <div id="menudeck">
+            <h4 style="color: white;">Menu Deck</h4>
             <button style="margin-bottom: 10px;" class="opmenu" onclick="embaralhar()">Embaralhar</button>
             <button style="margin-bottom: 10px;" class="opmenu" onclick="compra()">Comprar</button>
             <button class="opmenu" onclick="buscar()">Buscar Carta</button>
         </div>
+        <div id="menuextradeck">
+            <h4 style="color: white;">Menu Extra Deck</h4>
+            <button class="opmenu" onclick="buscarExtra()">Buscar Carta</button>
+        </div>
         <main>
             <section class="container-extra_ban down_space">
                 <div id="extra_monster-container1" class="right_space">
-                    <button id="Extra_Monster-Zone1" class="size-button">Extra 1</button>
+                    <button id="Extra_Monster_Zone1" class="size-button">Extra 1</button>
                 </div>
                 <div class="size-button right_space"></div>
                 <div id="extra_monster-container2" class="right_space">
-                    <button id="Extra_Monster-Zone2" class="size-button">Extra 2</button>
+                    <button id="Extra_Monster_Zone2" class="size-button">Extra 2</button>
                 </div>
                 <div class="size-button right_space"></div>
                 <div id="ban-container" class="right_space">
@@ -33,7 +38,7 @@
                         <button id="Camp_Zone" class="size-button">Field</button>
                     </div>
                     <div id="extra_deck-container">
-                        <button id="Extra_Deck" class="size-button">Extra Deck</button>
+                        <button id="Extra_Deck" class="size-button" onclick="abrir_menuextradeck()">Extra Deck</button>
                     </div>
                 </aside>
                 <div class="left_space">
@@ -91,6 +96,7 @@
             </div>
             <button onclick="enviarParaCemiterio()">Enviar Cemiterio</button>
             <button onclick="enviarParaDeck()">Enviar Deck</button>
+            <button onclick="enviarParaExtraDeck()">Enviar ExtraDeck</button>
             <button onclick="enviarParaBan()">Enviar Ban</button>
         </div>
         <div id="buscar">
@@ -101,6 +107,9 @@
         </div>
         <div id="destruir">
             <div id="cemiterio_container"></div>
+        </div>
+        <div id="extra">
+            <div id="extra_container"></div>
         </div>
     </footer>
     <script src="code.js"></script>
