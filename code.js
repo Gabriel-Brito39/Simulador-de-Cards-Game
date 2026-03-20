@@ -1,6 +1,8 @@
 let cartaSelecionada = null;
 let indiceSelecionado = null;
 
+let Menudeck = document.getElementById("menudeck");
+
 let Zonas = {
     Monster_Zone1: null,
     Monster_Zone2: null,
@@ -28,14 +30,11 @@ let Deck = [
     {nome: "card9", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw_TfnuiNqTcz_5VE83RnodOhyVRUUCTZN5Q&s"},
     {nome: "card10", imagem: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw9WonJ5RzIMkpmtg1Bns_QwxwTfR-cxhjFw&s"}
 ]
-
-console.log("Deck original:", Deck);
-
+let Graveyard = [];
+let Ban = [];
 let Hand = []
 
 function abrir_menudeck(){
-    let Menudeck = document.getElementById("menudeck");
-
     if (Menudeck.style.display === "none"){
         Menudeck.style.display = "grid";
     } else {
@@ -48,8 +47,7 @@ function embaralhar(){
 
         [Deck[i], Deck[j]] = [Deck[j], Deck[i]];
     }
-
-    console.log("Deck embaralhado:", Deck);
+    Menudeck.style.display = "none";
 }
 function compra(){
     if (Deck.length === 0){
@@ -60,11 +58,9 @@ function compra(){
     let carta = Deck.shift();
     Hand.push(carta);
 
-    console.log("Carta comprada:", carta);
-    console.log("Sua mão:", Hand);
-    console.log("Cartas restantes no deck:", Deck);
-
     atualizarHand();
+
+    Menudeck.style.display = "none";
 }
 function atualizarHand(){
 
@@ -111,10 +107,8 @@ function clicarZona(idZona){
 
     let cartaNaZona = Zonas[idZona];
 
-    // 🔴 CASO 1: tem carta selecionada na mão → enviar pra zona
     if(cartaSelecionada){
 
-        // se já tiver carta na zona → volta pra mão
         if(cartaNaZona){
             Hand.push(cartaNaZona);
         }
@@ -131,7 +125,6 @@ function clicarZona(idZona){
         return;
     }
 
-    // 🔵 CASO 2: não tem carta selecionada → puxar da zona pra mão
     if(cartaNaZona){
 
         Hand.push(cartaNaZona);
@@ -161,9 +154,13 @@ function buscar(){
     let area = document.getElementById("buscar_container");
     let areap = document.getElementById("buscar");
 
-    areap.style.display = "flex";
-
     area.innerHTML = "";
+
+    if (areap.style.display === "none"){
+        areap.style.display = "flex";
+    } else {
+        areap.style.display = "none";
+    }
 
     Deck.forEach(function(carta, index){
 
@@ -189,12 +186,135 @@ function buscar(){
             atualizarHand();
             embaralhar();
         };
+        area.appendChild(botao);
+    });
+
+    Menudeck.style.display = "none";
+}
+function removerDaHand(){
+
+    if(indiceSelecionado === null){
+        console.log("Nenhuma carta selecionada");
+        return null;
+    }
+
+    let carta = Hand.splice(indiceSelecionado,1)[0];
+
+    cartaSelecionada = null;
+    indiceSelecionado = null;
+
+    atualizarHand();
+
+    return carta;
+}
+function enviarParaCemiterio(){
+
+    let carta = removerDaHand();
+    if(!carta) return;
+
+    Graveyard.push(carta);
+
+    console.log("Enviado para o cemitério:", carta.nome);
+}
+function enviarParaBan(){
+
+    let carta = removerDaHand();
+    if(!carta) return;
+
+    Ban.push(carta);
+
+    console.log("Carta banida:", carta.nome);
+}
+function enviarParaDeck(){
+
+    let carta = removerDaHand();
+    if(!carta) return;
+
+    Deck.push(carta);
+
+    embaralhar(); 
+
+    console.log("Carta retornou ao deck:", carta.nome);
+}
+function mostrarCemiterio(){
+
+    let area = document.getElementById("cemiterio_container");
+    let areap = document.getElementById("destruir");
+
+    area.innerHTML = "";
+
+    if (areap.style.display === "none"){
+        areap.style.display = "flex";
+    } else {
+        areap.style.display = "none";
+    }
+
+    Graveyard.forEach(function(carta, index){
+
+        let botao = document.createElement("button");
+
+        botao.className = "cardButton";
+        botao.style.backgroundImage = `url(${carta.imagem})`;
+        botao.style.backgroundSize = "140px 200px";
+        botao.style.backgroundPosition = "center";
+
+        botao.onclick = function(){
+
+            Hand.push(carta);
+
+            Graveyard.splice(index,1);
+
+            areap.style.display = "none";
+
+            cartaSelecionada = null;
+            indiceSelecionado = null;
+
+            atualizarHand();
+        };
 
         area.appendChild(botao);
     });
 }
-function enviar_gravehard_topcard(){}
-function enviar_gravehard(){}
+function mostrarBanimento(){
+
+    let area = document.getElementById("banir_container");
+    let areap = document.getElementById("banir");
+
+    area.innerHTML = "";
+
+    if (areap.style.display === "none"){
+        areap.style.display = "flex";
+    } else {
+        areap.style.display = "none";
+    }
+
+    Ban.forEach(function(carta, index){
+
+        let botao = document.createElement("button");
+
+        botao.className = "cardButton";
+        botao.style.backgroundImage = `url(${carta.imagem})`;
+        botao.style.backgroundSize = "140px 200px";
+        botao.style.backgroundPosition = "center";
+
+        botao.onclick = function(){
+
+            Hand.push(carta);
+
+            Ban.splice(index,1);
+
+            areap.style.display = "none";
+
+            cartaSelecionada = null;
+            indiceSelecionado = null;
+
+            atualizarHand();
+        };
+
+        area.appendChild(botao);
+    });
+}
+
 function abrir_menuextradeck(){}
 
 [
